@@ -9,6 +9,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    // If your code relies on types from browser environments such as DOM and WebWorker, you can update the lib field: "lib": ["WebWorker"]
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true
