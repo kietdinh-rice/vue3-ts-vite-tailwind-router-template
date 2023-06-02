@@ -1,0 +1,22 @@
+version: 0.2
+
+env:
+  parameter-store:
+    S3_dist_output: "vite-ts-app-s3-bucket"
+    CloudFront_distribution_id: "vite-ts-app-cloudfront-distribution-id"
+phases:
+  install:
+    commands:
+      - npm i npm@latest -g
+      - pip install --upgrade pip
+      - pip install --upgrade awscli
+  pre_build:
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run build
+  post_build:
+    commands:
+      - aws s3 sync ./dist $S3_dist_output --cache-control max-age=86400,must-revalidate
+      - aws cloudfront create-invalidation --distribution-id $CloudFront_distribution_id --paths "/*" 
